@@ -1,0 +1,134 @@
+---
+title: "Metadata"
+author: "Wells"
+date: "2026-09-15"
+output: html_document
+---
+
+Class exercise to import your project metadata from the spreadsheet into R 
+
+--Create a folder called "class_project" in your code folder 
+
+--Save this file to the "class_project" folder 
+
+--Move your Nexis spreadsheet to the folder 
+
+--Create a project file on R Studio: File \| New Project \| \*\*\* select Existing folder \| "class_project" 
+
+--After project.Rproj launches, then launch this file, metadata.Rmd, and complete the tutorial
+
+**By doing this, you avoid the ring of hell where R can't find your data**
+
+#load tidyverse, janitor, rio
+
+```{r}
+
+library(tidyverse)
+library(janitor)
+library(rio)
+install.packages("readxl")
+library(readxl)
+
+```
+
+#Import your data
+
+```{r}
+
+data <- read_excel("Disinformation_Search_Results")
+View(data)
+
+```
+
+# Clean names
+
+```{r}
+data <- data |> 
+  clean_names()
+
+```
+
+# check data types
+```{r}
+glimpse(data)
+```
+
+
+Next Steps: Count years, and create a ggplot
+
+# Transform date into years. See tutorial
+```{r}
+
+data <- data |> 
+  mutate(year = year(published_date))
+
+```
+
+
+# Create a ggplot
+```{r}
+company_counts <- data |>
+  filter(!is.na(company)) |>
+  mutate(company = case_when(
+    company %in% c("FACEBOOK INC", "META PLATFORMS INC") ~ "META (FACEBOOK)",
+    TRUE ~ company
+  )) |>
+  mutate(company = str_to_title(company)) |>
+  mutate(company = str_replace(company, "Llc$", "LLC")) |>
+  mutate(company = str_replace(company, " Of ", " of ")) |>
+  count(company, sort = TRUE)
+company_counts |>
+  filter(n >= 2) |>
+  ggplot(aes(x = n, y = reorder(company, n))) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = n), hjust = -0.3) +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
+  theme_minimal() +
+  labs(title = "Disinformation Search Results",
+       subtitle = "Articles Mentioning Business Disinformation",
+       caption = "Graphic by Rob Wells, 9-15-2026",
+       x = "Number of Articles",
+       y = NULL)
+```
+
+#Count publications
+
+```{r}
+publication_counts <- data |>
+  count(publication_4, sort = TRUE)
+publication_counts
+```
+
+
+#Visualize publications
+
+```{r}
+publication_counts |>
+  filter(n >= 3) |>
+  mutate(publication_4 = case_when(
+    str_detect(publication_4, "^Congressional Documents") ~ "Congressional Documents & Publications",
+    str_detect(publication_4, "ANNALS") ~ "The ANNALS (American Academy of Political & Social Science)",
+    TRUE ~ publication_4
+  )) |>
+  ggplot(aes(x = n, y = reorder(publication_4, n))) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = n), hjust = -0.3) +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
+  scale_y_discrete(labels = scales::label_wrap(30)) +
+  theme_minimal() +
+  labs(title = "Disinformation Search Results",
+       subtitle = "Articles by Publication",
+       caption = "Graphic by Rob Wells, 9-15-2026",
+       x = "Number of Articles",
+       y = NULL)
+```
+
+
+
+
+# NOTES ON FIXING COMPLEX Date COLUMN WITH HOURS AND MINUTES
+
+```{r}
+women <- women |> 
+  mutate(date = as.Date(strptime(published_date, format = "%B %d, %Y %A")))
+```
