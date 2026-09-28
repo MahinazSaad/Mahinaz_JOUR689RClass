@@ -1,0 +1,51 @@
+---
+title: "Mahinaz_Homework_Basic_R_Proficency"
+Author: "Mahinaz"
+date: "2026-09-27"
+output: html_document
+---
+Homework Basic R Proficency 
+
+```{r}
+library(tidyverse)
+
+```
+
+```{r}
+#Import dataframe 
+mob_data <- rio:: import("https://raw.githubusercontent.com/wellsdata/CompText_Jour/main/data/mob_analysis_data.csv")
+
+```
+
+```{r}
+nrow(mob_data)
+ncol(mob_data)
+```
+```{r}
+mob_data |> 
+  count(Newspaper, sort = TRUE) |> 
+          slice_head(n = 15)
+```
+```{r}
+mob_data |> 
+  count(keyword, sort = TRUE)
+```
+```{r}
+mob_data |> 
+  distinct(docname, Year) |> 
+  count(Year) |> 
+arrange(desc(n))
+```
+```{r}
+mob_data |> 
+  count(Year) |> 
+  ggplot(aes(x = Year, y = n)) +
+  geom_col() +
+  labs(title = "Total Entries by Year", x = "Year", y = "Entries")
+```
+Memo:
+
+This dataset has 3,836 rows and 7 columns, and it stretches across 110 years, from 1805 to 1955. You'll notice I added arrange(desc(n)) to the articles-by-year table. I did that on purpose so the busiest years show up first. Sorted that way, it's clear that coverage peaks between 1893 and 1906, with 1903 on top at 120 articles. That lines up with some of the worst years of lynching in the United States. The Birmingham Age-Herald appears more than any other named paper, with 118 entries, perhaps because it was in Alabama, where alot of lynchings took place during this period, so a local paper would have had more of these events to report on. Finally, the and the word "mob" makes up 3,273 entries, or about 85% of the data.
+
+A couple of flaws stand out. The chart shows nearly 250 entries for 1903, roughly double the 120 articles from that year, which suggests some stories are probably counted more than once. The keyword column could also use some cleaning. "Mob," "mobs," "mob's" and "mob-" are really the same word, "masked" and "masked men" often point to the same passage. 
+
