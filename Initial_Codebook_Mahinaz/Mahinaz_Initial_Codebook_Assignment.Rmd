@@ -1,0 +1,238 @@
+---
+title: "Mahinaz_Initial_ Codebook_Assignment"
+author: "Mahinaz Saad"
+date: "2026-10-27"
+output: html_document
+---
+
+# Research Questions
+
+## RQ1: What frames do public relations and five adjacent fields use when describing disinformation, and how often does each appear in each field?
+
+## RQ2:How did the use of these frames change after the public release of generative artificial intelligence (AI) in late 2022?
+
+## Codebook
+## This codebook explains how each article is labeled. Each article is checked for three frames, or ways of talking about disinformation. Only paragraphs that mention disinformation, misinformation, fake news or information disorder are checked. If any of those paragraphs contains one of a frame's indicator words, the article is coded 1 for that frame; if none does, it is coded 0. An article can be coded 1 for more than one frame.
+
+### Frame 1: Crisis
+
+### Meaning: Disinformation is described as a crisis or a threat that organizations or societies must respond to.
+### Indicator words: crisis, crises, paracrisis, reputational threat, reputational damage
+### Example: "Disinformation can trigger an organizational crisis."
+### Source: Coombs (2019); Jin et al. (2020)
+
+### Frame 2: Influence operations
+
+### Meaning: Disinformation is described as a deliberate, organized campaign by governments, organizations or other groups to change what people believe or do.
+### Indicator words: influence operation, influence campaign, coordinated campaign, astroturfing, state-sponsored, propaganda
+### Example: "State-sponsored disinformation campaigns targeted voters."
+### Source: Goldstein et al. (2023); Jowett and O'Donnell (2019)
+
+### Frame 3: Technology
+
+### Meaning: Disinformation is described as a technology problem, created or spread by tools such as bots or generative AI.
+### Indicator words: artificial intelligence, AI, generative AI, deepfake, synthetic media, large language model, bots, algorithm
+### Example: "Social bots amplify disinformation across networks."
+### Source: Ferrara et al. (2016); Goldstein et al. (2023)
+
+## Field
+
+### Each article is placed in a field based on words in its journal's name. For example, a journal with "journalism" in its name is coded Journalism. Health journals, and journals that fit none of the fields, are coded Other.
+
+### Period
+
+## Before generative AI:** articles published from 2016 to 2022
+## After generative AI:** articles published from 2023 to 2026
+
+### The dividing line is ChatGPT's public release on November 30, 2022 (OpenAI, 2022).
+
+## References
+
+### Coombs, W. T. (2019). *Ongoing crisis communication: Planning, managing, and responding* (5th ed.). SAGE.
+
+### Ferrara, E., Varol, O., Davis, C., Menczer, F., & Flammini, A. (2016). The rise of social bots. *Communications of the ACM, 59*(7), 96–104. https://doi.org/10.1145/2818717
+
+### Goldstein, J. A., Sastry, G., Musser, M., DiResta, R., Gentzel, M., & Sedova, K. (2023). *Generative language models and automated influence operations: Emerging threats and potential mitigations*. arXiv. https://doi.org/10.48550/arXiv.2301.04246
+
+### Jin, Y., van der Meer, T. G. L. A., Lee, Y.-I., & Lu, X. (2020). The effects of corrective communication and employee backup on the effectiveness of fighting crisis misinformation. *Public Relations Review, 46*(3), 101910. https://doi.org/10.1016/j.pubrev.2020.101910
+
+### Jowett, G. S., & O'Donnell, V. (2019). *Propaganda and persuasion* (7th ed.). SAGE.
+
+### OpenAI. (2022, November 30). *Introducing ChatGPT*. https://openai.com/index/chatgpt/
+
+
+# Step 1: loading the Data
+
+```{r}
+library(tidyverse)
+library(knitr)
+```
+```{r}
+articles_df <- read_csv("articles_df.csv", show_col_types = FALSE)
+metadata <- read_csv("metadata.csv", show_col_types = FALSE)
+```
+
+# Step 2: Removing reference lists. The rationale here is to avoid the code counting parts of the references as titles. this step basically cuts each article off where its reference list begins, so that titles in the references are not mistaken for the authors’ own discussion of disinformation. It looks for headings such as “References” or “Bibliography” in the second half of each article and removes everything from that point on.
+## Disclosure: Claude was consulted in developing the code below 
+```{r}
+
+```
+
+```{r}
+paragraphs <- articles_df %>%
+  select(filename, headline, paragraph = sentence) %>%
+  mutate(paragraph = replace_na(paragraph, "")) %>%
+  group_by(filename) %>%
+  mutate(
+    line      = row_number(),
+    is_ref    = str_detect(str_trim(paragraph),
+                           regex("^(references?|bibliography|works cited|literature cited)\\s*[:.]?\\s*($|\\d|\\[|[A-Z][a-z]+,)",
+                                 ignore_case = TRUE)) &
+                line > max(line) * 0.5,
+    ref_start = if (any(is_ref)) min(line[is_ref]) else Inf
+  ) %>%
+  filter(line < ref_start) %>%
+  ungroup()
+```
+
+# Step 3: Matching each article to its metadata and cleaning. 
+## This step matches each article to its journal by turning every title into a simplified “key” (lowercase, without spaces or punctuation), so small differences in how titles are written don’t prevent a match. It then removes articles that could not be matched, are not mainly in English, fall outside 2016–2026, or are editorials, resulting in 1,890 articles.
+```{r}
+   make_key <- function(x) {
+     str_sub(str_remove_all(str_to_lower(x), "[^a-z0-9]"), 1, 60)
+   }
+
+   metadata_keyed <- metadata %>%
+     mutate(key = make_key(Title)) %>%
+     filter(key != "") %>%
+     distinct(key, .keep_all = TRUE) %>%
+     select(key, journal = pubtitle, year, language, documentType)
+
+   articles <- paragraphs %>%
+     distinct(filename, headline) %>%
+     mutate(key = make_key(headline)) %>%
+     left_join(metadata_keyed, by = "key") %>%
+     filter(!is.na(journal)) %>%
+     filter(str_detect(language, "^English")) %>%
+     mutate(year = as.integer(year)) %>%
+     filter(year >= 2016, year <= 2026) %>%
+     filter(is.na(documentType) | !str_detect(documentType, "Editorial"))
+
+   nrow(articles)
+```
+# Step 4: Assigning each field and period with mutate and case_when. 
+## This step uses mutate() and case_when() to label each article with a field, based on keywords in its journal’s name, and a period, based on whether it was published before (2016–2022) or after (2023–2026) -- ChatGPT’s release on November 30, 2022. case_when() applies the rules in order and stops at the first match, so more specific rules, such as health journals, are checked before broader ones, such as media.
+
+```{r}
+   articles <- articles %>%
+     mutate(
+       field = case_when(
+         str_detect(journal, regex("public relations|strategic communication|communication management|crisis and risk communication|corporate communication", ignore_case = TRUE)) ~ "Public relations",
+         str_detect(journal, regex("medic|health|vaccin|nurs|clinic|epidemiol|pharma|disease|cancer|pediatr|psychiatr", ignore_case = TRUE)) ~ "Other",
+         str_detect(journal, regex("journalism|news", ignore_case = TRUE)) ~ "Journalism",
+         str_detect(journal, regex("politic", ignore_case = TRUE)) ~ "Political communication",
+         str_detect(journal, regex("comput|information|data|electronic|engineering|applied sciences|future internet|ieee|algorithm|intelligen|informatics|sensors|technolog", ignore_case = TRUE)) ~ "Information and computer science",
+         str_detect(journal, regex("psycholog|cognitive research|cognition", ignore_case = TRUE)) ~ "Psychology",
+         str_detect(journal, regex("media|communication|internet|platform", ignore_case = TRUE)) ~ "Media and platform studies",
+         TRUE ~ "Other"
+       ),
+       period = case_when(
+         year <= 2022 ~ "Before generative AI (2016-2022)",
+         year >= 2023 ~ "After generative AI (2023-2026)"
+       )
+     )
+
+   articles %>% count(field, sort = TRUE) %>% kable(caption = "Articles by field")
+   articles %>% count(period) %>% kable(caption = "Articles by period")
+```
+# Step 5: Applying the three frame codes with mutate and case_when
+## This step keeps only the paragraphs that mention disinformation, misinformation, fake news or information disorder, then uses mutate() and case_when() to code each paragraph 1 or 0 for each of the three frames, based on the indicator words in the codebook. Each article is then coded 1 for a frame if any of its paragraphs uses that frame.
+
+```{r}
+   disinfo_terms   <- "disinformation|misinformation|fake news|information disorder"
+   crisis_terms    <- "crisis|crises|paracrisis|reputational (threat|damage)"
+   influence_terms <- "influence operation|influence campaign|coordinated (influence )?campaign|astroturf|state-sponsored|propaganda"
+   tech_terms      <- "artificial intelligence|generative ai|\\bai\\b|deepfake|synthetic media|language model|\\bbots?\\b|algorithm"
+
+   coded_paragraphs <- paragraphs %>%
+     filter(filename %in% articles$filename) %>%
+     filter(str_detect(paragraph, regex(disinfo_terms, ignore_case = TRUE))) %>%
+     mutate(
+       text_lower = str_to_lower(paragraph),
+       crisis = case_when(
+         str_detect(text_lower, crisis_terms) ~ 1,
+         TRUE ~ 0
+       ),
+       influence_operations = case_when(
+         str_detect(text_lower, influence_terms) ~ 1,
+         TRUE ~ 0
+       ),
+       technology = case_when(
+         str_detect(text_lower, tech_terms) ~ 1,
+         TRUE ~ 0
+       )
+     )
+
+   coded_articles <- articles %>%
+     left_join(
+       coded_paragraphs %>%
+         group_by(filename) %>%
+         summarise(across(c(crisis, influence_operations, technology), max)),
+       by = "filename"
+     ) %>%
+     mutate(across(c(crisis, influence_operations, technology), ~ replace_na(.x, 0)))
+```
+
+# Step 6: Examples of coded paragraphs 
+## This step shows three example paragraphs for each frame, shortened to 300 characters, to check that the indicator words capture what each frame is meant to measure.
+
+```{r}
+   coded_paragraphs %>% filter(crisis == 1) %>% slice_head(n = 3) %>%
+     transmute(paragraph = str_trunc(paragraph, 300)) %>% kable(caption = "Crisis")
+
+   coded_paragraphs %>% filter(influence_operations == 1) %>% slice_head(n = 3) %>%
+     transmute(paragraph = str_trunc(paragraph, 300)) %>% kable(caption = "Influence operations")
+
+   coded_paragraphs %>% filter(technology == 1) %>% slice_head(n = 3) %>%
+     transmute(paragraph = str_trunc(paragraph, 300)) %>% kable(caption = "Technology")
+```
+# Step 7: Results for RQ1 and RQ2
+## RQ1: Percentage of articles in each field that use each frame. 
+### This table shows the number of articles for each field and what percentage of them use each frame.
+
+```{r}
+   coded_articles %>%
+     group_by(field) %>%
+     summarise(
+       articles                     = n(),
+       percent_crisis               = round(100 * mean(crisis), 1),
+       percent_influence_operations = round(100 * mean(influence_operations), 1),
+       percent_technology           = round(100 * mean(technology), 1)
+     ) %>%
+     arrange(desc(articles)) %>%
+     kable(caption = "RQ1: Frames by field")
+```
+## RQ2: Percentage of articles that use each frame, before and after generative AI
+### This table compares the percentage of articles using each frame before (2016–2022) and after (2023–2026) ChatGPT's public release.
+
+```{r}
+   coded_articles %>%
+     group_by(period) %>%
+     summarise(
+       articles                     = n(),
+       percent_crisis               = round(100 * mean(crisis), 1),
+       percent_influence_operations = round(100 * mean(influence_operations), 1),
+       percent_technology           = round(100 * mean(technology), 1)
+     ) %>%
+     kable(caption = "RQ2: Frames before and after generative AI")
+```
+## Some preliminary findings:
+
+## After ChatGPT's release, the share of articles framing disinformation as a technological problem rose from 29.6% to 48.0%, while the crisis frame rose slightly (18.7% to 23.7%) and the influence operations frame declined slightly (19.6% to 15.7%). Across fields, journalism articles used the crisis (45.1%) and influence operations (35.3%) frames most often, information and computer science articles relied most on the technology frame (56.9%), and psychology articles rarely used any of the three. Unfortunately, PR could not be compared because the corpus contains only one article from a public relations journal.
+
+## More findings and next steps given the findings:
+
+## 1. The ProQuest corpus contains almost no articles from public relations journals, so the field comparison in RQ1 cannot yet include public relations. Supplementing the corpus with core PR journals.
+## 2. Some articles do not mention the search terms in their body text, likely because the terms appear only in the title, abstract or keywords. These articles are coded 0 on all frames.
+## 3. The example paragraphs show that some reference entries are still included in articles whose reference lists lack a clear heading, which can inflate frame counts. 
+
