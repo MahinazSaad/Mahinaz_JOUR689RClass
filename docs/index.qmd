@@ -6,7 +6,7 @@ format:
   html:
     theme: cosmo
 ---
-Trying to fix this 
+Trying to fix this website.  
 # Hosting a GitHub Page - R Cheat Sheet
 
 This exercise will allow you to create a basic web page which will be required for the Investigate Your Community final project option.
