@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rob Wells">
-<meta name="dcterms.date" content="2026-06-01">
+<meta name="author" content="Mahinaz Saad">
+<meta name="dcterms.date" content="2026-11-24">
 
-<title>Hosting a GitHub Page</title>
+<title>Common Narratives in Disinformation News Coverage</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -86,7 +86,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hosting a GitHub Page</h1>
+<h1 class="title">Common Narratives in Disinformation News Coverage</h1>
 </div>
 
 
@@ -96,14 +96,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Rob Wells </p>
+             <p>Mahinaz Saad </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 1, 2026</p>
+      <p class="date">November 24, 2026</p>
     </div>
   </div>
   
@@ -115,149 +115,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Trying to fix this website.<br>
-# Hosting a GitHub Page - R Cheat Sheet</p>
-<p>This exercise will allow you to create a basic web page which will be required for the Investigate Your Community final project option.</p>
-<p>For this exercise, you will create a page with your one paragraph story idea. You will then host it on your GitHub page.</p>
-<section id="styled-text" class="level2">
-<h2 class="anchored" data-anchor-id="styled-text">Styled Text</h2>
-<p>At the core, QMD files are text files, and they allow you to use a very lightweight “markup” language to style text, similar to html, but much less fussy.</p>
-<p>Outside of the codeblocks (the gray sections where we write code), we can style any text using standard markdown styling.</p>
-<p>This is a nice guide to styling text with markdown: <a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown guide</a></p>
-<p>We can create headings similar to html’s h1 to h6 with hashtags.</p>
-<section id="this-is-an-h5" class="level5">
-<h5 class="anchored" data-anchor-id="this-is-an-h5">This is an h5</h5>
-<p>We can create links, like this: <a href="https://google.com">google</a></p>
-<p>We can <strong>bold</strong> or <em>italic</em> text.</p>
-<p>We can create bulleted lists.</p>
-<ul>
-<li>bullet one</li>
-<li>bullet two</li>
-<li>bullet three</li>
-</ul>
+<section id="how-the-news-talks-about-disinformation" class="level1">
+<h1>How the News Talks About Disinformation</h1>
+<section id="from-media-literacy-to-deepfakes" class="level2">
+<h2 class="anchored" data-anchor-id="from-media-literacy-to-deepfakes">From media literacy to deepfakes</h2>
+<p>This topic model analyzed 100 Nexis Uni articles about disinformation published from 2017 to 2026, to identify five topics. Three topics are relevant to how disinformation is narrated in news coverage. Media literacy training, the largest topic every year, covers UNESCO and other programs teaching journalists and youth leaders to counter disinformation, especially around COVID-19. Social media platforms, strongest from 2021 to 2024, covers the Facebook whistleblower, Twitter impersonation and congressional testimony on Big Tech. AI, deepfakes and tech policy is small but growing in 2024 and 2025, reflecting an emerging narrative about deepfake detection, deepfake pornography and AI in elections.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="disinformation_topics.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Aggregate mean topic proportions per year. Graphic by Mahinaz Saad.</figcaption>
+</figure>
+</div>
+<p>Two topics weren’t relevant – blog news feeds, made up entirely of Gates of Vienna roundup posts, and business reports, drawn from 2025 Canada Media industry reports that mention disinformation only in passing.</p>
+<p>Overall, topic modeling was useful in revealing how coverage shifted from media literacy and social media toward AI and deepfakes; however, these should be treated as exploratory initial results to be refined in future work.</p>
 </section>
 </section>
-<section id="code-blocks" class="level2">
-<h2 class="anchored" data-anchor-id="code-blocks">Code blocks</h2>
-<p>We can also add special code inside of code blocks – the gray sections where we write code – that control how they render in our html document. These output options let us do things like:</p>
-<ul>
-<li>Show or hide the code when we render our html document (echo: true or false)</li>
-<li>Prevent the code from actually running when we render our html document (eval: true or false)</li>
-<li>Hide warnings from outputing when we render our html document (warning: true or false)</li>
-</ul>
-<p>There’s a <a href="https://quarto.org/docs/computations/execution-options.html#output-options">full guide here</a>.</p>
-<p>The code below, for example, will output the text inside the print statement when rendered to html, but the actual code – the print() function – will be hidden.</p>
-</section>
-<section id="create-your-website" class="level2">
-<h2 class="anchored" data-anchor-id="create-your-website">Create your website</h2>
-<p>In place of these instructions, you will paste your project one paragraph story idea into this document and any code you’ve developed so far.</p>
-<p>You will need to load libraries and data because rendering a page requires a full R session to execute on the code.</p>
-<p>First, create H1 headers</p>
-<p><strong>For example:</strong></p>
-</section>
-<section id="income-and-vacancies-of-baltimore-neighborhoods-2020" class="level1">
-<h1>Income and Vacancies of Baltimore Neighborhoods 2020</h1>
-<section id="looking-at-wealth-inequality-in-charm-city" class="level2">
-<h2 class="anchored" data-anchor-id="looking-at-wealth-inequality-in-charm-city">Looking at wealth inequality in Charm City</h2>
+<section id="importing-the-data" class="level1">
+<h1>Importing the data</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You will write your code in chunks but not execute the data. Use {r eval=FALSE, include=TRUE} in the header so the page will render without running the actual code.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>income_vacancy <span class="sc">%&gt;%</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> community)) <span class="sc">+</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>income_2020), <span class="at">color =</span> <span class="st">"#64D197"</span>, <span class="at">stroke=</span><span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>vacant_2020<span class="sc">*</span><span class="dv">1000</span>), <span class="at">stroke=</span><span class="dv">5</span>, <span class="at">color =</span> <span class="st">"#FB8AE3"</span>) <span class="sc">+</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"2020 Income (Green)"</span>, <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">62000</span>), <span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">dollar_format</span>(),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(<span class="sc">~</span>.<span class="sc">/</span><span class="dv">60000</span>, <span class="at">name=</span><span class="st">"2020 Percent Vacancies (Red)"</span>, <span class="at">labels =</span> scales<span class="sc">::</span>percent))<span class="sc">+</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_y_continuous(labels = scales::percent) +</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Income and Vacancies of Baltimore Neighborhoods 2020"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Community"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"source: BNIA Data - By: Parker Leipzig and Rob Wells"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"Files(100)"</span>, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.rtf$"</span>, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>disinfo <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(files, read_article) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(<span class="fu">mdy</span>(date_text))) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(year))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="running-the-topic-model" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-topic-model">Running the topic model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>minimumFrequency <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DTM <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(processedCorpus, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">bounds =</span> <span class="fu">list</span>(<span class="at">global =</span> <span class="fu">c</span>(minimumFrequency, <span class="cn">Inf</span>))))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sel_idx <span class="ot">&lt;-</span> slam<span class="sc">::</span><span class="fu">row_sums</span>(DTM) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>DTM <span class="ot">&lt;-</span> DTM[sel_idx, ]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>textdata <span class="ot">&lt;-</span> textdata[sel_idx, ]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9161</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>topicModel2 <span class="ot">&lt;-</span> <span class="fu">LDA</span>(DTM, K, <span class="at">method=</span><span class="st">"Gibbs"</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">iter =</span> <span class="dv">500</span>, <span class="at">verbose =</span> <span class="dv">25</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>tmResult <span class="ot">&lt;-</span> <span class="fu">posterior</span>(topicModel2)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> tmResult<span class="sc">$</span>topics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="set-up-for-hosting" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-for-hosting">Set up for hosting</h2>
-<ul>
-<li>Create a new folder in your repository called “docs” (if one isn’t there already)</li>
-<li>Rename this document as “index.qmd”</li>
-<li>Move “index.qmd” into the “docs” folder</li>
-</ul>
-</section>
-<section id="render-this-document-as-an-html-page" class="level2">
-<h2 class="anchored" data-anchor-id="render-this-document-as-an-html-page">Render this document as an html page</h2>
-<ul>
-<li>Make sure this document is named “index.qmd” and is in the “docs” folder</li>
-<li>Click Render button. It will create an html version of this page, called “index.html”</li>
-<li>Use GitHub Desktop to push your files to your your github repository on the web.</li>
-<li>Access the URL from your Github repository.</li>
-</ul>
-</section>
-<section id="host-html-on-github" class="level2">
-<h2 class="anchored" data-anchor-id="host-html-on-github">Host html on GitHub</h2>
-<ul>
-<li>Go to your github repository on the web, such as https://github.com/djnf-data-2026/casey-mann</li>
-<li>Click on Settings on the top right.</li>
-<li>Scroll down to the Pages section of Settings.</li>
-<li>Change the Branch to /docs and click save.</li>
-</ul>
-<section id="to-see-your-file-hosted" class="level4">
-<h4 class="anchored" data-anchor-id="to-see-your-file-hosted">To see your file hosted:</h4>
-<ul>
-<li>Back to your GitHub repo on the web: such as https://github.com/djnf-data-2026/casey-mann</li>
-<li>Click on Settings, then Pages</li>
-<li>Under GitHub Pages, you should see “Your site is live at https://djnf-data-2026.github.io/casey-mann/”</li>
-<li>Click that URL</li>
-<li>If it works, email it to robwells@umd.edu</li>
-</ul>
-</section>
-</section>
-<section id="revel-in-your-nerd-powers" class="level2">
-<h2 class="anchored" data-anchor-id="revel-in-your-nerd-powers">REVEL IN YOUR NERD POWERS</h2>
-</section>
-</section>
-<section id="part-2-embedding-images" class="level1">
-<h1>Part 2: Embedding Images</h1>
-<ul>
-<li><p>create a folder in your repository’s main branch, call it images</p></li>
-<li><p>find any .jpeg, .jpg or .png file and insert it into that folder.</p></li>
-<li><p>In a QMD file, display the image as follows:</p></li>
-</ul>
-<p>#<img src="images/your_link_here.png" class="img-fluid" alt="CAPTION FOR YOUR PHOTO"></p>
-<p>#<img src="images/xl-refresher-grid_SHEETS.png" class="img-fluid" alt="CHATTER FOR YOUR chart"></p>
-<p>A more advanced technique controlling the width and height</p>
-<p>#<img src="images/xl-refresher-SHEETS_screen.png" class="img-fluid" style="width:100.0%" alt="Read the Screen"></p>
-<section id="embedding-code" class="level3">
-<h3 class="anchored" data-anchor-id="embedding-code">Embedding code</h3>
-<p>From a <strong>Datawrapper Map</strong></p>
-<iframe title="Small Business Reporting, Spring 2024" aria-label="Map" id="datawrapper-chart-z4bny" src="https://datawrapper.dwcdn.net/z4bny/5/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="500" data-external="1">
-</iframe>
-<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r=0;r<e.length;r++)if(e[r].contentWindow===a.source){var i=a.data["datawrapper-height"][t]+"px";e[r].style.height=i}}}))}();
-</script>
-</section>
-<section id="embedding-video" class="level2">
-<h2 class="anchored" data-anchor-id="embedding-video">Embedding video</h2>
-<section id="deep-nerd-video" class="level3">
-<h3 class="anchored" data-anchor-id="deep-nerd-video">Deep Nerd Video</h3>
-<div id="first_steps">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/TNP_unReOpw?si=CQC3cG49TShkoJOG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
-</iframe>
+<section id="building-the-chart" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-chart">Building the chart</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vizDataFrame, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(year), <span class="at">y=</span>value, <span class="at">fill=</span>category)) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"proportion"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"year"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#9933FF"</span>, <span class="st">"#33FFFF"</span>, <span class="st">"red"</span>, <span class="st">"yellow"</span>, <span class="st">"darkblue"</span>)) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Common Narratives in Disinformation News Coverage"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Five probable topics in Nexis Uni sample. n=100"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Aggregate mean topic proportions per year. Graphic by Mahinaz Saad, 11-15-2026"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"disinformation_topics.png"</span>, <span class="at">width=</span><span class="dv">9</span>, <span class="at">height=</span><span class="dv">6</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<div id="second_steps">
-<section id="a-great-lecture-on-structural-racism-in-journalism" class="level3">
-<h3 class="anchored" data-anchor-id="a-great-lecture-on-structural-racism-in-journalism">A great lecture on structural racism in journalism</h3>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DIDHbEZYFSc?si=a-KNzlQgoGjXD6VV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
-</iframe>
-</section>
-</div>
-<p><strong>Now replace these two videos with something you selected.</strong></p>
-<p>The embed code is in the video share feature</p>
-</section>
-<section id="instructions-to-embed-a-gif" class="level2">
-<h2 class="anchored" data-anchor-id="instructions-to-embed-a-gif">Instructions to embed a gif</h2>
-<p>This is a very basic starter but it will get you to the finish line on Saturday. Good luck!</p>
-<p>–30–</p>
 </section>
 </section>
 
